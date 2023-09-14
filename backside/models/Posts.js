@@ -7,12 +7,21 @@ module.exports = (sequelize, DataTypes) => {
       postText: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          len: [1,1000]
+        }
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
       }
     });
-  
+
+    Posts.associate = (models) => {
+      Posts.hasMany(models.Comments, {
+        onDelete: "cascade"
+      })
+    }
+    
     return Posts;
   };
